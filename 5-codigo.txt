@@ -300,4 +300,3 @@ Board *--> Attempt1
 Board *--> Attempt2
 Board *--> Attempt3
 @enduml
-https://github.com/Master-Desarrollo-20-21/ejercicio-1-modelado-en-lenguajes-de-intercambio-de-datos-adominguez
