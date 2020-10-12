@@ -1,0 +1,303 @@
+--Vocabulario
+@startuml
+Mastermind *--> "1" Board
+Mastermind *--> "2" Player
+Mastermind *----> "1" Turn
+Turn --> Player
+Board *--> "1" SecretCode
+Board *--> "12" Attempt
+Board *--> "0..12" Result
+Board *--> "1" Score
+Combination <|-- SecretCode
+Combination <|-- Attempt
+Combination *--> "5" Position
+Position o--> Color
+Color <|-- Red
+Color <|-- Blue
+Color <|-- Green
+Color <|-- Yellow
+Color <|-- Pink
+Color <|-- White
+Color <|-- Black
+Color <|-- Brown
+Player <|-- CodeMaker
+Player <|-- CodeBraker
+CodeBraker o--> Goal
+CodeMaker ..> MakeCode
+CodeMaker ..> GiveFeedBack
+Action <|-- GuessCode
+Action <|-- MakeCode
+Action <|--- GiveFeedBack
+Action <|--- UpdateScore
+Goal ..> "1..12" GuessCode
+MakeCode --> SecretCode
+GuessCode --> Attempt
+GuessCode ..> OtherResult
+GiveFeedBack ..> SecretCode
+GiveFeedBack ..> Attempt
+GiveFeedBack --> Result
+Result <|-- WinnerResult
+Result <|-- OtherResult
+WinnerResult o-- "5" Black
+OtherResult o-- "0..4" Black
+OtherResult o-- "0..5" White
+Result ..> UpdateScore
+UpdateScore --> Score
+@enduml
+
+--Instrucciones
+@startuml
+[*] --> State1
+State1 --> State2 : CodeMade
+State2 --> State3 : Attempt
+State3 --> State4 : [isCodeBraken]
+State3 --> State4 : [isMaxNumAttempts]
+State3 --> State2
+State4 --> State5 : ScoreUpdated
+State5 --> [*] : isMaxNumGames
+State5 --> State1
+@enduml
+
+--Estado Inicial
+@startuml
+object Board
+object SecretCode
+object Attempt
+object Score {
+   Player1 = 0
+   Player2 = 0
+}
+object Position1
+object Position2
+object Position3
+object Position4
+object Position5
+object Color1
+Color1 : name = "red"
+object Color2
+Color2 : name = "white"
+object Color3
+Color3 : name = "green"
+object Color4
+Color4 : name = "blue"
+object Color5
+Color5 : name = "black"
+Board *--> "1" SecretCode
+Board *--> "0" Attempt
+Board *--> "1" "Score"
+SecretCode --> Position1
+SecretCode --> Position2
+SecretCode --> Position3
+SecretCode --> Position4
+SecretCode --> Position5
+Position1 *--> Color1
+Position2 *--> Color2
+Position3 *--> Color3
+Position4 *--> Color4
+Position5 *--> Color5
+@enduml
+
+--Estado Final
+@startuml
+object Board
+object SecretCode
+object Score {
+   Player1 = 3
+   Player2 = 0
+}
+object SCPosition1
+object SCPosition2
+object SCPosition3
+object SCPosition4
+object SCPosition5
+object SCColor1
+SCColor1 : name = "red"
+object SCColor2
+SCColor2 : name = "white"
+object SCColor3
+SCColor3 : name = "green"
+object SCColor4
+SCColor4 : name = "blue"
+object SCColor5
+SCColor5 : name = "black"
+
+SecretCode --> SCPosition1
+SecretCode --> SCPosition2
+SecretCode --> SCPosition3
+SecretCode --> SCPosition4
+SecretCode --> SCPosition5
+SCPosition1 *--> SCColor1
+SCPosition2 *--> SCColor2
+SCPosition3 *--> SCColor3
+SCPosition4 *--> SCColor4
+SCPosition5 *--> SCColor5
+
+object Attempt1
+object Att1Position1
+object Att1Position2
+object Att1Position3
+object Att1Position4
+object Att1Position5
+object Att1Color1
+Att1Color1 : name = "red"
+object Att1Color2
+Att1Color2 : name = "green"
+object Att1Color3
+Att1Color3 : name = "brown"
+object Att1Color4
+Att1Color4 : name = "pink"
+object Att1Color5
+Att1Color5 : name = "black"
+Attempt1 --> Att1Position1
+Attempt1 --> Att1Position2
+Attempt1 --> Att1Position3
+Attempt1 --> Att1Position4
+Attempt1 --> Att1Position5
+Att1Position1 *--> Att1Color1
+Att1Position2 *--> Att1Color2
+Att1Position3 *--> Att1Color3
+Att1Position4 *--> Att1Color4
+Att1Position5 *--> Att1Color5
+
+object Attempt2
+object Att2Position1
+object Att2Position2
+object Att2Position3
+object Att2Position4
+object Att2Position5
+object Att2Color1
+Att2Color1 : name = "red"
+object Att2Color2
+Att2Color2 : name = "blue"
+object Att2Color3
+Att2Color3 : name = "green"
+object Att2Color4
+Att2Color4 : name = "pink"
+object Att2Color5
+Att2Color5 : name = "black"
+Attempt2 --> Att2Position1
+Attempt2 --> Att2Position2
+Attempt2 --> Att2Position3
+Attempt2 --> Att2Position4
+Attempt2 --> Att2Position5
+Att2Position1 *--> Att2Color1
+Att2Position2 *--> Att2Color2
+Att2Position3 *--> Att2Color3
+Att2Position4 *--> Att2Color4
+Att2Position5 *--> Att2Color5
+
+object Attempt3
+object Att3Position1
+object Att3Position2
+object Att3Position3
+object Att3Position4
+object Att3Position5
+object Att3Color1
+Att3Color1 : name = "red"
+object Att3Color2
+Att3Color2 : name = "white"
+object Att3Color3
+Att3Color3 : name = "green"
+object Att3Color4
+Att3Color4 : name = "blue"
+object Att3Color5
+Att3Color5 : name = "black"
+Attempt3 --> Att3Position1
+Attempt3 --> Att3Position2
+Attempt3 --> Att3Position3
+Attempt3 --> Att3Position4
+Attempt3 --> Att3Position5
+Att3Position1 *--> Att3Color1
+Att3Position2 *--> Att3Color2
+Att3Position3 *--> Att3Color3
+Att3Position4 *--> Att3Color4
+Att3Position5 *--> Att3Color5
+
+object Result1
+object Res1Color1
+Res1Color1 : name = black
+object Res1Color2
+Res1Color2 : name = black
+object Res1Color3
+Res1Color3 : name = white
+Result1 *--> Res1Color1
+Result1 *--> Res1Color2
+Result1 *--> Res1Color3
+
+object Result2
+object Res2Color1
+Res2Color1 : name = black
+object Res2Color2
+Res2Color2 : name = black
+object Res2Color3
+Res2Color3 : name = black
+object Res2Color4
+Res2Color4 : name = white
+Result2 *--> Res2Color1
+Result2 *--> Res2Color2
+Result2 *--> Res2Color3
+Result2 *--> Res2Color4
+
+object Result3
+object Res3Color1
+Res3Color1 : name = black
+object Res3Color2
+Res3Color2 : name = black
+object Res3Color3
+Res3Color3 : name = black
+object Res3Color4
+Res3Color4 : name = black
+object Res3Color5
+Res3Color5 : name = black
+Result3 *--> Res3Color1
+Result3 *--> Res3Color2
+Result3 *--> Res3Color3
+Result3 *--> Res3Color4
+Result3 *--> Res3Color5
+
+SCColor3 -[hidden]--> Attempt1
+Att1Color3 -[hidden]--> Attempt2
+Att2Color3 -[hidden]--> Attempt3
+Attempt1 -right--> Result1
+Attempt2 -right--> Result2
+Attempt3 -right--> Result3
+
+SCPosition1 -right[hidden]-->SCPosition2
+SCPosition2 -right[hidden]-->SCPosition3
+SCPosition3 -right[hidden]-->SCPosition4
+SCPosition4 -right[hidden]-->SCPosition5
+
+Att1Position1 -right[hidden]-->Att1Position2
+Att1Position2 -right[hidden]-->Att1Position3
+Att1Position3 -right[hidden]-->Att1Position4
+Att1Position4 -right[hidden]-->Att1Position5
+
+Att2Position1 -right[hidden]-->Att2Position2
+Att2Position2 -right[hidden]-->Att2Position3
+Att2Position3 -right[hidden]-->Att2Position4
+Att2Position4 -right[hidden]-->Att2Position5
+
+Att3Position1 -right[hidden]-->Att3Position2
+Att3Position2 -right[hidden]-->Att3Position3
+Att3Position3 -right[hidden]-->Att3Position4
+Att3Position4 -right[hidden]-->Att3Position5
+
+Res1Color1 -right[hidden]--> Res1Color2
+Res1Color2 -right[hidden]--> Res1Color3
+
+Res2Color1 -right[hidden]--> Res2Color2
+Res2Color2 -right[hidden]--> Res2Color3
+Res2Color3 -right[hidden]--> Res2Color4
+
+Res3Color1 -right[hidden]--> Res3Color2
+Res3Color2 -right[hidden]--> Res3Color3
+Res3Color3 -right[hidden]--> Res3Color4
+Res3Color4 -right[hidden]--> Res3Color5
+
+Board *--> "1" "Score"
+Board *--> "1" SecretCode
+Board *--> Attempt1
+Board *--> Attempt2
+Board *--> Attempt3
+@enduml
+https://github.com/Master-Desarrollo-20-21/ejercicio-1-modelado-en-lenguajes-de-intercambio-de-datos-adominguez
